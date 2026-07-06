@@ -1,0 +1,26 @@
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+		//System.out.println("Hello World");
+		Scanner sc = new Scanner(System.in);
+		String line = sc.nextLine();
+		int sum = 0;
+		String[] digits = line.split("");
+		//System.out.print(digits[0]);
+		for(int i=0;i<digits.length;i++)
+		{
+		    int digit = Integer.parseInt(digits[i]);
+		    sum= sum+digit;
+		    if(sum>=10 && i==digits.length-1 )
+		    {
+		        i=-1; 
+		        line = sum+""; 
+		        digits = line.split("");
+		        sum =0;
+		    }
+		    
+		}
+		System.out.print(sum);
+	}
+}
