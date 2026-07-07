@@ -1,0 +1,102 @@
+import java.util.Scanner;
+public class Main
+{
+	public static void main(String[] args) 
+	{
+		//System.out.println("Hello World");
+		Scanner sc = new Scanner(System.in);
+		Course[] arr = new Course[4];
+		for(int i=0; i<4;i++)
+		{
+		    int id = sc.nextInt(); sc.nextLine();
+		    String name = sc.nextLine();
+		    
+		    String admin = sc.nextLine();
+		    int quiz = sc.nextInt();
+		    int handson = sc.nextInt();
+		    Course c1 = new Course(id,name,admin,quiz,handson);
+		    arr[i] = c1;
+		}
+		sc.nextLine();
+		String cadmin = sc.nextLine();
+		int chandson = sc.nextInt();
+		int avg = findAvgOfQuizByAdmin(arr, cadmin);
+		Course[] csorted= sortCourseByHandsOn(arr, chandson);
+		//
+		if(avg==0){System.out.println("No Course found");}
+		else{System.out.println(avg);}
+		if(csorted==null){System.out.println("No Course found with mentioned attributes");}
+		else{
+		    for(int i=0;i<csorted.length;i++)
+		    {
+		        String str = csorted[i].getname();
+		        System.out.println(str);
+		    }
+		    
+		}
+	}
+	public static int findAvgOfQuizByAdmin(Course[] arr, String Courseadmin)
+	{
+	    //getquiz score for that particular Courseadmin
+	    int count = 0;
+	    int sum = 0;
+	    for(int i=0;i<4;i++)
+	    {
+	        if(arr[i].getadmin().equalsIgnoreCase(Courseadmin)){sum=sum+arr[i].getquiz();count++;}
+	    }
+	    //return avg of those scores
+	    if(count==0){
+	    return 0;}
+	    return sum/count ;
+	}
+	public static Course[] sortCourseByHandsOn(Course[] arr, int handson)
+	{
+	    //course araay with all courses of handson less than given one
+	    int count = 0;
+	    Course[] newarr = new Course[4];
+	    for(int i=0;i<4;i++)
+	    {
+	        if(arr[i].gethandson()<handson)
+	        {
+	            count++;
+	            newarr[i] = arr[i];
+	        }
+	    }
+	    if(count==0){return null;}
+	    Course[] newarr2 = new Course[count];
+	    for(int i=0;i<count;i++)
+	    {
+	        newarr2[i] = newarr[i];
+	    }
+	        
+	   java.util.Arrays.sort(newarr2, (a,b)-> a.gethandson() - b.gethandson());
+	     
+	    //ascending order by handson scores
+	    //return that array
+	    return newarr2;
+	}
+}    
+class Course 
+{   
+    private int courseId;
+    private String courseName;
+    private String courseAdmin;
+    private int quiz;
+    private int handson;
+    
+    public int getid(){return courseId;}
+    public String getname(){return courseName;}
+    public String getadmin(){return courseAdmin;}
+    public int getquiz(){return quiz;}
+    public int gethandson(){return handson;}
+    
+    public Course
+    (int courseId, String courseName, String courseAdmin, int quiz, int handson)
+    {
+        this.courseId = courseId;
+        this.courseName = courseName;
+        this.courseAdmin = courseAdmin;
+        this.quiz = quiz;
+        this.handson = handson;
+    }
+}
