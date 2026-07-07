@@ -1,0 +1,123 @@
+//import java.util.Scanner
+public class Main
+{
+	public static void main(String[] args) 
+	{
+		//System.out.println("Hello World");
+		java.util.Scanner sc = new java.util.Scanner(System.in);
+		int n = sc.nextInt();
+		if (n==0){System.out.println("No Trucksfound");}
+		else{
+		Truck[] arr = new Truck[n];
+		//
+		//take input
+		for(int i=0;i<n;i++)
+		{
+		    int tid= sc.nextInt(); sc.nextLine();
+		    String tname= sc.nextLine();
+		    float miles= sc.nextFloat();
+		    int did= sc.nextInt(); sc.nextLine();
+		    String dname= sc.nextLine();
+		    String contact= sc.nextLine();
+		    float exp= sc.nextFloat();
+		    Driver di = new Driver(did,dname,contact,exp);
+		    arr[i] = new Truck(tid,tname,miles,di);
+		}
+		int distance = sc.nextInt();
+		//call method 
+		//println
+		Truck[] printarr = getAllTruckWithDistance(arr, distance, n);
+		if(printarr==null){System.out.println("No Trucks found");}
+		if(printarr != null){for(int i=0;i<printarr.length;i++)
+		{
+		    System.out.println(printarr[i].gettid() );
+		    System.out.println(printarr[i].gettname() );
+		    System.out.println(printarr[i].getmiles() );
+		    System.out.println(printarr[i].getdriver().getdid() );
+		    System.out.println(printarr[i].getdriver().getdname());
+		}
+		
+		}
+		
+		
+	}}
+	public static Truck[] getAllTruckWithDistance(Truck[] arr, int distance,int n)
+	{
+	    Truck[] arr2 = new Truck[n];
+	    int count = 0;
+	    for(int i = 0; i<n;i++)
+	    {
+	        if(arr[i].getmiles()>=distance)
+	        { arr2[count]=arr[i];count++;}
+	    }
+	    if (count==0){return null;}
+	    Truck[] arr3 = new Truck[count];
+	    for(int i =0;i<count;i++)
+	    {
+	        arr3[i]= arr2[i];
+	    }
+	    java.util.Arrays.sort(arr3, (a,b) -> Float.compare(b.getdriver().getexp() , a.getdriver().getexp()));
+	    return arr3;
+	}
+}
+class Truck
+{
+    private int tid;       public int gettid(){return tid;}
+    private String tname;  public String gettname(){return tname;}
+    private float miles;   public float getmiles(){return miles;}
+    private Driver driver; public Driver getdriver(){return driver;}
+    
+    public Truck(int tid, String tname, float miles, Driver driver)
+    {
+        this.tid = tid;
+        this.tname = tname;
+        this.miles = miles;
+        this.driver = driver;
+    }
+}
+class Driver
+{
+    private int did;          public int getdid(){return did;}
+    private String dname;     public String getdname(){return dname;}
+    private String contact;   public String getcontact(){return contact;}
+    private float experience; public float getexp(){return experience;}
+    public Driver(int did, String dname,String contact, float experience)
+    {
+        this.did=did;
+        this.dname=dname;
+        this.contact=contact;
+        this.experience=experience;
+    }
+}
+/* sample input:
+4
+801
+blue Horizon 
+4500 
+81 
+Ananya Sen 
+Tel 033 4000 1001 
+2.75 
+802 
+Thunder Road 
+3000.50 
+82 
+Rohit A 
+rohit.a@fleet.co 
+4.25 
+803 
+Green Valley 
+3000 
+83 
+Simran Kaur 
++1 415 555 0199 
+6.5 
+804 
+Crimson Bay 
+6500.25
+84
+arvind N 
+ARVIND-OPS-009 
+9.0 
+30000
+*/
